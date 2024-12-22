@@ -1,9 +1,9 @@
-package com.myheritage.controllers;
+package com.stats.controllers;
 
-import com.myheritage.model.ActivityDataExtended;
-import com.myheritage.model.ActivityDataWithScore;
-import com.myheritage.service.IsolationTreeAnomaly;
-import com.myheritage.service.KMeansAnomaly;
+import com.stats.model.ActivityDataExtended;
+import com.stats.model.ActivityDataWithScore;
+import com.stats.service.IsolationTreeAnomaly;
+import com.stats.service.KMeansAnomaly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

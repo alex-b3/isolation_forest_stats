@@ -1,4 +1,4 @@
-package com.myheritage;
+package com.stats;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

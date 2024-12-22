@@ -1,10 +1,9 @@
-package com.myheritage.service;
+package com.stats.service;
 
-import com.myheritage.model.ActivityData;
-import com.myheritage.model.ActivityDataExtended;
-import com.myheritage.model.IncludeInVectorAssembler;
-import com.myheritage.repository.ActivityDataRepository;
-import org.apache.spark.SparkConf;
+import com.stats.model.ActivityData;
+import com.stats.model.ActivityDataExtended;
+import com.stats.model.IncludeInVectorAssembler;
+import com.stats.repository.ActivityDataRepository;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.ml.clustering.KMeans;
@@ -21,10 +20,8 @@ import org.apache.spark.sql.SparkSession;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

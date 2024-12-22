@@ -1,4 +1,4 @@
-package com.myheritage.model;
+package com.stats.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

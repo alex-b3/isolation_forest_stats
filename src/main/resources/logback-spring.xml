@@ -26,7 +26,7 @@
         <appender-ref ref="ROLLING"/>
     </root>
 
-    <logger name="com.myheritage.automations" level="INFO" additivity="false">
+    <logger name="com.stats.automations" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ROLLING"/>
     </logger>

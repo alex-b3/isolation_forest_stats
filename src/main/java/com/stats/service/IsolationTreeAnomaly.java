@@ -1,9 +1,9 @@
-package com.myheritage.service;
+package com.stats.service;
 
-import com.myheritage.model.ActivityCompositeKey;
-import com.myheritage.model.ActivityData;
-import com.myheritage.model.ActivityDataWithScore;
-import com.myheritage.repository.ActivityDataRepository;
+import com.stats.model.ActivityCompositeKey;
+import com.stats.model.ActivityData;
+import com.stats.model.ActivityDataWithScore;
+import com.stats.repository.ActivityDataRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import smile.anomaly.IsolationForest;
