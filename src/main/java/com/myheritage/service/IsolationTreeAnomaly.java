@@ -26,10 +26,8 @@ public class IsolationTreeAnomaly {
 
         List<ActivityData> activityDataList;
         List<ActivityDataWithScore> allAnomalies = new ArrayList<>();
-
         activityDataList = (windowDays == 0) ? findByActivityId(activityId) : findByActivityIdAndWindowDays(activityId, windowDays);
 
-        List<LocalDate> allDates = getAllDatesForActivityList(activityDataList);
 
         // Group by scenario
         Map<String, List<ActivityData>> groupedByScenario = activityDataList.stream()
@@ -37,8 +35,9 @@ public class IsolationTreeAnomaly {
 
         groupedByScenario.forEach((scenario, dataList) -> {
 
-            Set<LocalDate> existingDates = activityDataList.stream()
-                    .filter(activityData -> activityData.getId().getScenario().equals(scenario))
+            List<LocalDate> allDates = getAllDatesForActivityList(dataList);
+
+            Set<LocalDate> existingDates = dataList.stream()
                     .map(activityData -> activityData.getId().getDate())
                     .collect(Collectors.toSet());
 
@@ -78,9 +77,22 @@ public class IsolationTreeAnomaly {
                         System.out.println(dataListWithScore.getActivityData() + " " + dataListWithScore.getScore());
                         allAnomalies.add(dataListWithScore);
                     });
+
         });
 
-        return allAnomalies;
+        double stdDevAnomaly = calculateStandardDeviation(activityDataList);
+        double meaningfulChangeThreshold = 2 * stdDevAnomaly;
+
+        return allAnomalies.stream()
+                .filter(ads -> {
+                    // Calculate the change magnitude for the current activity data compared to the mean of dataset
+                    double meanCounter = activityDataList.stream().mapToDouble(ActivityData::getCounter).average().orElse(0.0);
+                    double changeMagnitude = Math.abs(ads.getActivityData().getCounter() - meanCounter);
+
+                    // Only include anomalies where the change magnitude exceeds the meaningful change threshold
+                    return changeMagnitude > meaningfulChangeThreshold;
+                })
+                .collect(Collectors.toList());
     }
 
     private double[][] getFilledData(List<ActivityData> dataList, Map<String, Double>  minMax) {
@@ -164,4 +176,13 @@ public class IsolationTreeAnomaly {
         return minMaxMap;
     }
 
+    private double calculateStandardDeviation(List<ActivityData> dataList) {
+        double mean = dataList.stream()
+                .mapToDouble(ActivityData::getCounter)
+                .average().orElse(0.0);
+        double variance = dataList.stream()
+                .mapToDouble(a -> Math.pow(a.getCounter() - mean, 2))
+                .average().orElse(0.0);
+        return Math.sqrt(variance);
+    }
 }
